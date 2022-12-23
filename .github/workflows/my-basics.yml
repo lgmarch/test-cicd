@@ -1,4 +1,7 @@
 name: basics
+env:
+  APPLICATION_NAME: "MyFlask"
+  PACKAGE_NAME: "flask-deploy-ver-${{ github.sha }}"
 
 on:
   push:
@@ -10,13 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print Hello Message
+      - name: Print Hello Message in Testing
         run: echo "Hello World from Testing job"
+        
+      - name: Execure few commands
+        run: |
+          echo "Hello Message1"
+          echo "Hello Message2"
+          echo "Application Name: ${{ env.APPLICATION_NAME }}"
 
   my_deploy:
     runs-on: ubuntu-latest
     needs: my_testing
 
     steps:
-      - name: Print Hello Message
+      - name: Print Hello Message in Deploy
         run: echo "Hello World from Deploy job"
+        
+      - name: Printing Deployment package
+        run: echo "Deploy paskage name is ${{ env.PACKAGE_NAME }}"
