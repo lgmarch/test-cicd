@@ -12,7 +12,7 @@ jobs:
   my_testing:
     runs-on: ubuntu-latest
 
-    steps:
+    steps:b
       - name: Print Hello Message in Testing
         run: echo "Hello World from Testing job"
 
@@ -31,10 +31,21 @@ jobs:
   my_deploy:
     runs-on: ubuntu-latest
     needs: my_testing
+    env:
+      VAR1: "This is Job Variable 1"
+      VAR2: "This is Job Variable 2"
 
     steps:
       - name: Print Hello Message in Deploy
         run: echo "Hello World from Deploy job"
+
+      - name: Printing env variable
+        env:
+          LOCAL_VAR: "This is Steps Variable"
+        run: |
+          echo "Var1 = ${{ env.VAR1 }}"
+          echo "Var2 = ${{ env.VAR2 }}"
+          echo "Var2 = $LOCAL_VAR"
 
       - name: Printing Deployment package
         run: echo "Deploy package name is ${{ env.PACKAGE_NAME }}"
@@ -43,4 +54,4 @@ jobs:
         run: aws --version
 
       - name: Lets test some packages if they are here 2
-        run: zip
+        run: zip --version
